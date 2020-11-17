@@ -13,10 +13,29 @@ Resources: I used several tutorials on https://www.scratchapixel.com
               
 Procedure:
 
-      Problem 1:  To  create new shapes in the world of our ray tracer we will create a newshape.h and newshape.cpp file. The header file will be used to inherit the Shape class provided and setup the constructor(s) for that shape. The .cpp file will be where I will compute normals and ray intersection, and return a HitRecord object holding the pertinent information. 
+      Problem 1:  To  create new shapes in the world of our ray tracer we will create a newshape.h and newshape.cpp file. The header file will be used
+      to inherit the Shape class provided and setup the constructor(s) for that shape. The .cpp file will be where I will compute normals and ray
+      intersection, and return a HitRecord object holding the pertinent information. 
       
-      Problem 2:  Firstly, we must add a Vector3d variable to the shape class to hold the color of the object. We must then create the setColor() function to set the color of each object. Doing this will allow us to set the color for the object immediately after instantiation of the object. Once we can successfully render a basic color (without a shading model) we can begin working on the Phong shading model. Adding support for Phong shading will be carried out in the trace() function of the scene class. The formulae for calculation will be carried out similarly to how we did in the previous homework but using the Eigen library instead. Upon calculation of the ambient, diffuse and specular values, one can then apply the three and return the final color vector. 
+      Problem 2:  Firstly, we must add a Vector3d variable to the shape class to hold the color of the object. We must then create the setColor()
+      function to set the color of each object. Doing this will allow us to set the color for the object immediately after instantiation of the
+      object. Once we can successfully render a basic color (without a shading model) we can begin working on the Phong shading model. Adding support
+      for Phong shading will be carried out in the trace() function of the scene class. The formulae for calculation will be carried out similarly to
+      how we did in the previous homework but using the Eigen library instead. Upon calculation of the ambient, diffuse and specular values, one can
+      then apply the three and return the final color vector. 
       
-      Problem 3:  In order to cast a shadow I began by creating another Ray object inside of the trace() function (shadowRay) in order to begin testing to see if a color is being shaded by another object. The origin of this shadowRay will be set to some point on an object. The direction of this ray will be set to be the direction from its origin point towards the light source. We will test to see if it is obstructed by another object along it's path towards the light source. We do so by creating another HitRecord object (shadowHit) and setting it to equal the closestHit(shadowRay). If shadowHit is null then we know the shadowRay did NOT intersect another object and hence is NOT shaded. Otherwise, we will now that the origin of shadowRay IS shaded so we set the lighting at that point to be only ambient lighting. 
+      Problem 3:  In order to cast a shadow I began by creating another Ray object inside of the trace() function (shadowRay) in order to begin 
+      testing to see if a color is being shaded by another object. The origin of this shadowRay will be set to some point on an object. The direction
+      of this ray will be set to be the direction from its origin point towards the light source. We will test to see if it is obstructed by another 
+      object along it's path towards the light source. We do so by creating another HitRecord object (shadowHit) and setting it to equal the 
+      closestHit(shadowRay). If shadowHit is null then we know the shadowRay did NOT intersect another object and hence is NOT shaded. Otherwise, we
+      will now that the origin of shadowRay IS shaded so we set the lighting at that point to be only ambient lighting. 
       
-      Problem 4:  In order to create a reflective surface I began by adding a boolean parameter to the shape class which will be used to decide whether a shape is reflective or not. Next we will need to write a reflect() function which will be used to calculate the direction in which the original rays and shadow rays will be reflected. We wil create another Ray object, this time to hold the refelection ray (reflectRay). We will run a loop that will check each object for reflectiveness. If the object is reflective then we will recursively call the trace() function so that we can set the color on those surfaces to equal the combination of their own color and 80% of the color of the shape which is being reflected on its surface. Because ray reflection is computationally expensive, will need to limit the number of recursive calls we allow the program to make in order to avoid an infinite loop of reflected rays. Otherwise, if the shape has a non-reflective surface, we will calculate its lighting as normally with the phong shading model. 
+      Problem 4:  In order to create a reflective surface I began by adding a boolean parameter to the shape class which will be used to decide
+      whether a shape is reflective or not. Next we will need to write a reflect() function which will be used to calculate the direction in which the 
+      original rays and shadow rays will be reflected. We wil create another Ray object, this time to hold the refelection ray (reflectRay). We will
+      run a loop that will check each object for reflectiveness. If the object is reflective then we will recursively call the trace() function so 
+      that we can set the color on those surfaces to equal the combination of their own color and 80% of the color of the shape which is being 
+      reflected on its surface. Because ray reflection is computationally expensive, will need to limit the number of recursive calls we allow the 
+      program to make in order to avoid an infinite loop of reflected rays. Otherwise, if the shape has a non-reflective surface, we will calculate 
+      its lighting as normally with the phong shading model. 
