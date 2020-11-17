@@ -13,9 +13,9 @@ Resources: I used several tutorials on https://www.scratchapixel.com
               
 Procedure:
 
-      Problem 1:  To  create new shapes in the world of our ray tracer we will create a newshape.h and newshape.cpp file. The header file will be used
-      to inherit the Shape class provided and setup the constructor(s) for that shape. The .cpp file will be where I will compute normals and ray
-      intersection, and return a HitRecord object holding the pertinent information. 
+      Problem 1:  To  create new shapes in the world of our ray tracer we will create a <newshape>.h and <newshape>.cpp file for each new shape.
+      The header file will be used to inherit the Shape class provided and setup the constructor(s) for that shape. The .cpp file will be where I will
+      compute normals and ray intersection, and return a HitRecord object holding the pertinent information. 
       
       Problem 2:  Firstly, we must add a Vector3d variable to the shape class to hold the color of the object. We must then create the setColor()
       function to set the color of each object. Doing this will allow us to set the color for the object immediately after instantiation of the
